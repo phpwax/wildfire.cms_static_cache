@@ -1,0 +1,20 @@
+{
+    "name": "phpwax/wildfire.cms_static_cache",
+    "authors": [
+        {
+            "name": "Charles Marshall",
+            "email": "charles@oneblackbear.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "license": "MIT",
+    "autoload": {
+      "classmap": [
+        "lib/"
+      ],
+      "files": ["ini.php"]
+    }
+}
