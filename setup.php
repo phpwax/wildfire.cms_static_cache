@@ -2,7 +2,8 @@
 
 if(defined("CONTENT_MODEL")){
   WaxEvent::add("cms.save.success.finished", function(){
-    $obj = WaxEvent::data();
+    $controller = WaxEvent::data();
+    $obj = $controller->model;
     $class = get_class($obj);
     //if the class matches & readonly is enabled, then make the pages
     if($class == CONTENT_MODEL && ReadOnly::is_enabled()){
