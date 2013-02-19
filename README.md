@@ -9,7 +9,11 @@ Creation:
 - result is then saved to matching file path
 - base path is tmp/cache/static/PATH_BASED_ON_URL/index.html
 
-Apache:
+To Use:
+- Create a symlink from tmp/cache/statics to public/statics (ln -s tmp/cache/statics/ public/statics)
+- Amend  Apache / Nginx config files, see below
+
+Apache
 
 Add this to your htaccess for apache servers (under the RewriteBase but before the current RewriteConditions):
 
