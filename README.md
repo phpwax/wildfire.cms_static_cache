@@ -9,5 +9,14 @@ Creation:
 - result is then saved to matching file path
 - base path is tmp/cache/static/PATH_BASED_ON_URL/index.html
 
+Apache:
+
+Add this to your htaccess for apache servers (under the RewriteBase but before the current RewriteConditions):
+
+RewriteCond statics/$1index.html -f
+RewriteRule (.*) /statics/$1index.html [L,NC]
+
+Nginx:
+
 
 
