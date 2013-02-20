@@ -1,0 +1,3 @@
+<?
+class AdminReadonlyController extends CMSAdminReadonlyController{}
+?>
