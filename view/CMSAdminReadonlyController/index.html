@@ -1,0 +1,15 @@
+<div class='cms-wrapper cms-uploads-<?if($uploads):?>1 clearfix<?else:?>0<?endif?>'>
+<?if($current_user->allowed($module_name, "index")):?>
+  <?$mods = CMSApplication::get_modules()?>
+  <div class='index_container'>
+
+
+    <div class='listing' id="data-listing">
+
+    </div>
+
+  </div>
+
+
+<?endif?>
+</div>
