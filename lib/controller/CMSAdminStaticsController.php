@@ -13,7 +13,7 @@ class CMSAdminStaticsController extends AdminContentController {
                         );
   public $operation_actions = array(
                                                   'regen'=>array('action'=>'regen', 'name'=>'Regenerate'),
-                                                  'remove'=>array('action'=>'remove', 'name'=>'Remove')
+                                                  'wipe'=>array('action'=>'wipe', 'name'=>'Remove')
                                                 );
 
 
@@ -77,7 +77,7 @@ class CMSAdminStaticsController extends AdminContentController {
     $this->redirect_to("/".trim($this->controller,"/")."/");
   }
 
-  public function remove(){
+  public function wipe(){
     $class = $this->model_class;
     $url = new $class(Request::param("id"));
     if($url){
