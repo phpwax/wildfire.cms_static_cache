@@ -8,6 +8,7 @@ RewriteBase /
 
 ####### NEW SEGMENT TO ADD IN #######
 RewriteCond statics/$1index.html -f
+RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
 RewriteRule (.*) /statics/$1index.html [L,NC]
 ############## END #################
 
