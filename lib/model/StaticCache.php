@@ -2,9 +2,12 @@
 class StaticCache extends WaxModel{
 
   public function setup(){
-    $this->define("regex", "CharField");
-    $this->define("url", "CharField");
-    $this->define("status", "BooleanField", array('scaffold'=>true));
+
+    $this->define("title", 'CharField', array('default'=>'Enter title', 'scaffold'=>true, 'required'=>true, 'primary_group'=>1, 'group'=>'content'));
+    $this->define("regex", "CharField", array('primary_group'=>1, 'group'=>'content'));
+    $this->define("url", "CharField", array('primary_group'=>1, 'group'=>'content'));
+    $this->define("status", "BooleanField", array('scaffold'=>true, 'primary_group'=>1, 'group'=>'content', 'label'=>'Active'));
+    parent::setup();
   }
 
   public static function lookup_by_url_map($model){

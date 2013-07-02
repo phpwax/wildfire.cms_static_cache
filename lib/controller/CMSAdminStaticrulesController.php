@@ -16,6 +16,16 @@ class CMSAdminStaticrulesController extends AdminComponent {
                                                 );
 
 
+  protected function events(){
+    parent::events();
+
+    WaxEvent::clear("cms.model.columns");
+    WaxEvent::add("cms.model.columns", function(){
+      $obj = WaxEvent::data();
+      $obj->scaffold_columns = array('title'=>true, 'rule'=>true);
+    });
+
+  }
 
 
 }
