@@ -23,8 +23,7 @@ class CMSAdminStaticsController extends AdminContentController {
     WaxEvent::add("cms.layout.sublinks", function(){
       $obj = WaxEvent::data();
       $obj->quick_links = array(
-          "Cache Page" => '/admin/'.$obj->module_name."/selection/",
-          "Cache All"=>'/admin/'.$obj->module_name."/all/"
+          "Cache Page" => '/admin/'.$obj->module_name."/selection/"
           );
     });
     WaxEvent::clear("cms.model.columns");
@@ -32,6 +31,7 @@ class CMSAdminStaticsController extends AdminContentController {
       $obj = WaxEvent::data();
       $obj->scaffold_columns = array('title'=>true, 'origin_url'=>true, 'date_cached'=>true);
     });
+    WaxEvent::clear("cms.model.init");
     WaxEvent::add("cms.model.init", function(){
       $obj = WaxEvent::data();
       $obj->model = new $obj->model_class($obj->model_scope);
@@ -46,6 +46,7 @@ class CMSAdminStaticsController extends AdminContentController {
     $this->model_class = CONTENT_MODEL;
     parent::_parent();
   }
+
 
   public function selection(){
     $class = $this->model_class = CONTENT_MODEL;
