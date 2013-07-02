@@ -1,5 +1,5 @@
 <?
-class ReadOnlyRule extends WaxModel{
+class StaticCache extends WaxModel{
 
   public function setup(){
     $this->define("regex", "CharField");
@@ -11,7 +11,7 @@ class ReadOnlyRule extends WaxModel{
     $urls = array();
     $map_model = new WildfireUrlMap;
     $class = get_class($model);
-    $rule = new ReadOnlyRule;
+    $rule = new StaticCache;
 
     foreach($map_model->filter("destination_id", $model->primval)->filter("destination_model", $class)->all() as $url) $urls[] = $url->origin_url;
     //if there are no urls to check, then return false
@@ -32,6 +32,21 @@ class ReadOnlyRule extends WaxModel{
 
     return $rule->first()->found;
 
+  }
+
+
+  public static function cacheable($model){
+    //if there is no matching rule for this item then its turned on
+    return !(self::lookup_by_url_map($model));
+  }
+
+  public static function create($target_url, $content){
+    $dir_path = CACHE_DIR ."statics".$target_url;
+    $file_path = $dir_path ."index.html";
+    //if the path doesnt exist, make the folder
+    if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
+    //write the file
+    file_put_contents($file_path, $content);
   }
 
 }
