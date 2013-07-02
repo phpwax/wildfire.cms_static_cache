@@ -4,7 +4,7 @@ class StaticCache extends WaxModel{
   public function setup(){
     $this->define("regex", "CharField");
     $this->define("url", "CharField");
-    $this->define("status", "BooleanField");
+    $this->define("status", "BooleanField", array('scaffold'=>true));
   }
 
   public static function lookup_by_url_map($model){
