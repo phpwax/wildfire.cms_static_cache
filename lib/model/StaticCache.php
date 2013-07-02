@@ -47,9 +47,10 @@ class StaticCache extends WaxModel{
       //if the path doesnt exist, make the folder
       if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
       $file_path = $dir_path ."index.html";
-      //save the file path
-      $url_model->update_attributes(array('static_cache_occurred'=>date("Y-m-d H:i:s"), 'static_cache_file'=>str_replace(CACHE_DIR."statics", "", $file_path) ) );
+      $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", $file_path);
     }
+    //save the file path
+    $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
     //write the file
     file_put_contents($file_path, $content);
   }
