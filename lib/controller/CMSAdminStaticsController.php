@@ -23,7 +23,7 @@ class CMSAdminStaticsController extends AdminContentController {
     WaxEvent::add("cms.layout.sublinks", function(){
       $obj = WaxEvent::data();
       $obj->quick_links = array(
-          "Cache Page" => '/admin/'.$obj->module_name."/selection/"
+          "Cache Specific Page" => '/admin/'.$obj->module_name."/selection/"
           );
     });
     WaxEvent::clear("cms.model.columns");
@@ -61,7 +61,7 @@ class CMSAdminStaticsController extends AdminContentController {
       $map_model = new $map_class;
       foreach($map_model->filter("destination_id", $obj->primval)->filter("destination_model", $class)->all() as $url) StaticCache::write($url, $content);
       $this->session->add_message("<a href='$source_url' target='_blank'>Cache for $obj->title</a> has been created.");
-    }elseif($posted && $page_id) $this->session->add_error("This page cannot be cached.");
+    }elseif($posted && $page_id) $this->session->add_error("This page cannot be cached, probably due to rule restricting it.");
   }
 
   public function regen(){
