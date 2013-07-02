@@ -1,5 +1,5 @@
 <?
-CMSApplication::register_module("staticcache", array("display_name"=>"Cache", "link"=>"/admin/statics/"));
+CMSApplication::register_module("statics", array("display_name"=>"Cache", "link"=>"/admin/statics/"));
 AutoLoader::register_view_path("plugin", __DIR__."/view/");
 AutoLoader::register_controller_path("plugin", __DIR__."/lib/controller/");
 AutoLoader::register_controller_path("plugin", __DIR__."/resources/app/controller/");
