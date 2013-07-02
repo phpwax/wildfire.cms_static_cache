@@ -45,6 +45,16 @@ class CMSAdminStaticsController extends AdminComponent {
     $this->redirect_to("/".trim($this->controller,"/")."/");
   }
 
+  public function remove(){
+    $class = $this->model_class;
+    $url = new $class(Request::param("id"));
+    if($url){
+      StaticCache::remove($url);
+      $this->session->add_message("Cache for $url->origin_url has been removed.");
+    }else $this->session->add_error("Cannot find entry for that page.");
+    $this->redirect_to("/".trim($this->controller,"/")."/");
+  }
+
 }
 
 ?>

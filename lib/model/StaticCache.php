@@ -40,19 +40,24 @@ class StaticCache extends WaxModel{
     return !(self::lookup_by_url_map($model));
   }
 
-  public static function write($url_model, $content){
+  public static function write($url_model, $content, $format="html"){
     if($url_model->static_cache_file) $file_path = CACHE_DIR. "statics".$url_model->static_cache_file;
     else{
       $dir_path = CACHE_DIR ."statics".$url_model->origin_url;
       //if the path doesnt exist, make the folder
       if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
-      $file_path = $dir_path ."index.html";
+      $file_path = $dir_path ."index.$format";
       $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", $file_path);
     }
     //save the file path
     $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
     //write the file
     file_put_contents($file_path, $content);
+  }
+
+  public function remove($model, $format="html"){
+    if($model->static_cache_file) unlink(CACHE_DIR."statics".$model->static_cache_file."index.$format");
+    $model->update_attributes(array('date_cached'=>'', 'static_cache_file'=>''));
   }
 
 }
