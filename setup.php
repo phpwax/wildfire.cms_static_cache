@@ -1,4 +1,6 @@
 <?
+CMSApplication::register_module("staticcache", array("display_name"=>"Cache", "link"=>"/admin/staticcache/"));
+
 //if this isnt defined, check for it
 if(!defined("URL_MAP_MODEL")){
   $app = new ApplicationController(false, false);
