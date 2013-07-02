@@ -3,6 +3,9 @@ CMSApplication::register_module("statics", array("display_name"=>"Cache", "link"
 AutoLoader::register_view_path("plugin", __DIR__."/view/");
 AutoLoader::register_controller_path("plugin", __DIR__."/lib/controller/");
 AutoLoader::register_controller_path("plugin", __DIR__."/resources/app/controller/");
+
+CMSApplication::register_asset("wildfire", "js", "wildfire.cms_static_cache");
+CMSApplication::register_asset("wildfire", "css", "wildfire.cms_static_cache");
 AutoLoader::$plugin_array[] = array("name"=>"wildfire.cms_static_cache","dir"=>__DIR__);
 
 
