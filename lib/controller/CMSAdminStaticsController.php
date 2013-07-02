@@ -19,10 +19,20 @@ class CMSAdminStaticsController extends AdminComponent {
 
   protected function events(){
     parent::events();
+    WaxEvent::clear("cms.layout.sublinks");
+    WaxEvent::add("cms.layout.sublinks", function(){
+      $obj = WaxEvent::data();
+      $obj->quick_links = array(
+          "Cache Page" => '/admin/'.$obj->module_name."/selection/",
+          "Cache All"=>'/admin/'.$obj->module_name."/all/"
+          );
+    });
+    WaxEvent::clear("cms.model.columns");
     WaxEvent::add("cms.model.columns", function(){
       $obj = WaxEvent::data();
       $obj->scaffold_columns = array('title'=>true, 'origin_url'=>true, 'date_cached'=>true);
     });
+    WaxEvent::clear("cms.model.init");
     WaxEvent::add("cms.model.init", function(){
       $obj = WaxEvent::data();
       $obj->model = new $obj->model_class($obj->model_scope);
