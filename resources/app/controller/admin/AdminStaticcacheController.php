@@ -1,3 +1,0 @@
-<?
-class AdminStaticcacheController extends CMSAdminStaticcacheController{}
-?>
