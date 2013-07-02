@@ -1,4 +1,7 @@
 <?=partial("_form_start", $this)?>
+  <div class='intro_block_content clearfix'>
+    <?=partial("_intro", array('model'=>$model, 'controller'=>$controller, 'model_class'=>$model_class, 'autosave'=>$autosave))?>
+  </div>
 
   <div class='edit_form_block_container clearfix'>
 
