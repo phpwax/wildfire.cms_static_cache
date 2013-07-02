@@ -1,4 +1,5 @@
 <?
+CMSApplication::register_module("staticcache", array("display_name"=>"Cache", "link"=>"/admin/staticcache/"));
 AutoLoader::register_view_path("plugin", __DIR__."/view/");
 AutoLoader::register_controller_path("plugin", __DIR__."/lib/controller/");
 AutoLoader::register_controller_path("plugin", __DIR__."/resources/app/controller/");
@@ -37,5 +38,5 @@ if(defined("CONTENT_MODEL")){
   });
 }
 
-CMSApplication::register_module("cache", array("display_name"=>"Cache", "link"=>"/admin/cache/"));
+
 ?>
