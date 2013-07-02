@@ -1,7 +1,7 @@
 <?php
-class CMSAdminStaticcacheController extends AdminComponent {
+class CMSAdminStaticsController extends AdminComponent {
 
-  public $module_name = "staticcache";
+  public $module_name = "statics";
   public $model_class = 'StaticCache';
   public $display_name = "Cache";
   public $dashboard = false;
