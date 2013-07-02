@@ -61,6 +61,7 @@ class StaticCache extends WaxModel{
     }
     //save the file path
     $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
+    if($format == "html") $content = str_ireplace("</body>", "<!-- SC: $url_model->static_cache_file --></body>", $content);
     //write the file
     file_put_contents($file_path, $content);
   }
