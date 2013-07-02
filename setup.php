@@ -1,5 +1,8 @@
 <?
-CMSApplication::register_module("statics", array("display_name"=>"Cache", "link"=>"/admin/statics/"));
+$navsubs = array('Exclusions'=>'/admin/staticrules/');
+CMSApplication::register_module("statics", array("display_name"=>"Cache", "link"=>"/admin/statics/", 'subs'=>$navsubs));
+CMSApplication::register_module("staticrules", array("display_name"=>"Rules", "link"=>"/admin/staticrules/", 'hidden'=>true));
+
 AutoLoader::register_view_path("plugin", __DIR__."/view/");
 AutoLoader::register_controller_path("plugin", __DIR__."/lib/controller/");
 AutoLoader::register_controller_path("plugin", __DIR__."/resources/app/controller/");
