@@ -1,0 +1,26 @@
+<?=partial("_form_start", $this)?>
+
+  <div class='edit_form_block_container clearfix'>
+
+    <div class='primary_form_container tabs_container clearfix'>
+        <ul class='tabs_nav clearfix'>
+
+            <li id="#select-page" class='tab-<?=$k?> tabs_nav_item'><a href="#content_tab_select-page">Select Page</a></li>
+
+        </ul>
+        <fieldset class='tab-contents clearfix select-page ' id="content_tab_select-page" >
+            <div class="fields meta_tabs " data-partial="parent">
+              <div class="raised meta-tab">
+                <?=partial("_parent", array('tabhash'=>"select-page", 'model'=>$model, 'join_model_class'=>$model_class, 'controller'=>$controller, 'fields'=>$fields, 'partial_paths'=>$partial_paths, 'scaffold_columns'=>array('title','status'), 'current_user'=>$current_user, 'operation_actions'=>array(), 'file_system_base'=>$file_system_base))?>
+              </div>
+            </div>
+        </fieldset>
+
+    </div>
+  </div>
+
+  <fieldset class='submit'>
+    <?=partial("_submit", array('model'=>$model, 'controller'=>$controller, 'model_class'=>$model_class, 'autosave'=>false))?>
+  </fieldset>
+
+</form>

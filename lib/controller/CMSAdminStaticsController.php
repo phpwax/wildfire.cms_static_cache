@@ -1,13 +1,13 @@
 <?php
-class CMSAdminStaticsController extends AdminComponent {
+class CMSAdminStaticsController extends AdminContentController {
 
   public $module_name = "statics";
   public $model_class = 'WildfireUrlMap';
   public $display_name = "Cache";
   public $dashboard = false;
   public $singular = "Cache";
-  public $per_page = 20;
   public $tree_layout = false;
+  public $per_page = 20;
   public $filter_fields=array(
                           'text' => array('columns'=>array('origin_url', 'title'), 'partial'=>'_filters_text', 'fuzzy'=>true)
                         );
@@ -42,6 +42,19 @@ class CMSAdminStaticsController extends AdminComponent {
     });
   }
 
+
+  public function _parent(){
+    $this->model_class = CONTENT_MODEL;
+    parent::_parent();
+  }
+
+  public function selection(){
+    $this->model_class = CONTENT_MODEL;
+    WaxEvent::run("cms.form.setup", $this);
+
+    $this->controller = "admin/content";
+
+  }
 
   public function regen(){
     $class = $this->model_class;
