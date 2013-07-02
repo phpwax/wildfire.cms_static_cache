@@ -61,7 +61,7 @@ class CMSAdminStaticsController extends AdminContentController {
       $map_class = URL_MAP_MODEL;
       $map_model = new $map_class;
       foreach($map_model->filter("destination_id", $obj->primval)->filter("destination_model", $class)->all() as $url) StaticCache::write($url, $content);
-      $this->session->add_message("<a href='$source_url' target='_blank'>Cache for $obj->title</a> has been created.");
+      $this->session->add_message("<a href='$obj->permalink' target='_blank'>Cache for $obj->title</a> has been created.");
     }elseif($posted && $page_id) $this->session->add_error("This page cannot be cached, probably due to rule restricting it.");
   }
 
@@ -72,7 +72,7 @@ class CMSAdminStaticsController extends AdminContentController {
       $source_url = "http://".$_SERVER['HTTP_HOST'].$url->origin_url."?readonly=1";
       $content = file_get_contents($source_url);
       StaticCache::write($url, $content);
-      $this->session->add_message("<a href='$source_url' target='_blank'>Cache for $url->origin_url</a> has been regenerated.");
+      $this->session->add_message("<a href='$url->origin_url' target='_blank'>Cache for $url->origin_url</a> has been regenerated.");
     }else $this->session->add_error("Cannot find entry for that page.");
     $this->redirect_to("/".trim($this->controller,"/")."/");
   }
