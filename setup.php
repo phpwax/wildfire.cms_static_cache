@@ -21,7 +21,7 @@ if(defined("URL_MAP_MODEL")){
 
     $model = WaxEvent::data();
     $model->define("static_cache_file", "CharField");
-    $model->define("date_cached", "DateTimeField", array('default'=>date("Y-m-d H:i:s"), 'output_format'=>"j F Y H:i", 'input_format'=> 'Y-m-d H:i:s'));
+    $model->define("date_cached", "DateTimeField", array('output_format'=>"j F Y H:i", 'input_format'=> 'Y-m-d H:i:s'));
   });
 }
 
