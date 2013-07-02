@@ -10,6 +10,13 @@ class StaticCache extends WaxModel{
     parent::setup();
   }
 
+  public function rule(){
+    if($this->regex && $this->url) return "Blocks '$this->url' exactly and any matching '$this->regex'";
+    else if($this->regex) return "Block any url matching '$this->regex'";
+    else if($this->url) return "Blocks '$this->url' exactly.";
+    return "";
+  }
+
   public static function lookup_by_url_map($model){
     $urls = array();
     $map_model = new WildfireUrlMap;
