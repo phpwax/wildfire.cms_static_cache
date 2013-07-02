@@ -11,6 +11,7 @@
         <fieldset class='tab-contents clearfix select-page ' id="content_tab_select-page" >
             <div class="fields meta_tabs " data-partial="parent">
               <div class="raised meta-tab">
+                <p>This will only create a cached version of the page if no rules block it.</p>
                 <?=partial("_parent", array('tabhash'=>"select-page", 'model'=>$model, 'join_model_class'=>$model_class, 'controller'=>$controller, 'fields'=>$fields, 'partial_paths'=>$partial_paths, 'scaffold_columns'=>array('title','status'), 'current_user'=>$current_user, 'operation_actions'=>array(), 'file_system_base'=>$file_system_base))?>
               </div>
             </div>
