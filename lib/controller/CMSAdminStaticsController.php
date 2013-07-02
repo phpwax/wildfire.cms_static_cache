@@ -23,7 +23,8 @@ class CMSAdminStaticsController extends AdminContentController {
     WaxEvent::add("cms.layout.sublinks", function(){
       $obj = WaxEvent::data();
       $obj->quick_links = array(
-          "Cache Specific Page" => '/admin/'.$obj->module_name."/selection/"
+          "Cache Specific Page" => '/admin/statics/selection/',
+          "Exclusions" => '/admin/staticrules/'
           );
     });
     WaxEvent::clear("cms.model.columns");

@@ -24,6 +24,14 @@ class CMSAdminStaticrulesController extends AdminComponent {
       $obj = WaxEvent::data();
       $obj->scaffold_columns = array('title'=>true, 'rule'=>true);
     });
+    WaxEvent::clear("cms.layout.sublinks");
+    WaxEvent::add("cms.layout.sublinks", function(){
+      $obj = WaxEvent::data();
+      $obj->quick_links = array(
+          "Cache Specific Page" => '/admin/statics/selection/',
+          "Exclusions" => '/admin/staticrules/'
+          );
+    });
 
   }
 
