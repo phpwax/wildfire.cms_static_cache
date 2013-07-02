@@ -11,7 +11,6 @@ if(!defined("URL_MAP_MODEL")){
   $app = new ApplicationController(false, false);
   define("URL_MAP_MODEL", $app->cms_mapping_class);
 }
-
 //add in extra cols to the url map
 if(defined("URL_MAP_MODEL")){
   WaxEvent::add(URL_MAP_MODEL.".setup", function(){
