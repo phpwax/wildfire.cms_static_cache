@@ -21,6 +21,7 @@ if(defined("URL_MAP_MODEL")){
 
     $model = WaxEvent::data();
     $model->define("static_cache_file", "CharField");
+    $model->define("static_cache_occurred", "DateTimeField");
   });
 }
 
