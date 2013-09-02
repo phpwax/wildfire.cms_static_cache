@@ -39,7 +39,6 @@ class StaticCache extends WaxModel{
     ";
     foreach($urls as $url) $rule->sql .= "'$url' REGEXP `regex` OR";
     $rule->sql = trim($rule->sql, " OR").") )";
-
     return $rule->first()->found;
 
   }
@@ -51,24 +50,41 @@ class StaticCache extends WaxModel{
   }
 
   public static function write($url_model, $content, $format="html"){
-    if($url_model->static_cache_file) $file_path = CACHE_DIR. "statics".$url_model->static_cache_file;
-    else{
-      $dir_path = CACHE_DIR ."statics".$url_model->origin_url;
-      //if the path doesnt exist, make the folder
-      if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
-      $file_path = $dir_path ."index.$format";
-      $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", $file_path);
-    }
+    $file_paths = self::file_paths($url_model, $format);
+    $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", $file_paths[0]);
     //save the file path
     $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
     if($format == "html") $content = str_ireplace("</body>", "<!-- SC: $url_model->static_cache_file --></body>", $content);
-    //write the file
-    file_put_contents($file_path, $content);
+    foreach($file_paths as $file_path) file_put_contents($file_path, $content);
   }
 
   public function remove($model, $format="html"){
-    if($model->static_cache_file) unlink(CACHE_DIR."statics".$model->static_cache_file."index.$format");
+    foreach(self::file_paths($model, $format) as $fp) if(is_readable($fp)) unlink($fp);
     $model->update_attributes(array('date_cached'=>'', 'static_cache_file'=>''));
+  }
+
+  public static function file_paths($url_model, $format="html"){
+    if(constant("WILDFIRE_MULTIDOMAIN")){
+      $m = new Domain;
+      if($cm = $url_model->destination_model) $c = new $cm($url_model->destination_id);
+      else return array();
+      //fetch top item
+      $top = new $cm($c->path_to_root()->rowset[0]);
+      $base = str_replace($top->permalink, "/", $url_model->origin_url);
+      foreach($top->domains as $row){
+        $dir_path = CACHE_DIR ."statics/".ltrim($row->webaddress.$base, "/");
+        if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
+        $file_paths[] = $dir_path ."index.$format";
+      }
+    }else if($url_model->static_cache_file){
+      $file_paths[] = CACHE_DIR. "statics".$url_model->static_cache_file;
+    }else{
+      $dir_path = CACHE_DIR ."statics".$url_model->origin_url;
+      //if the path doesnt exist, make the folder
+      if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
+      $file_paths[] = $dir_path ."index.$format";
+    }
+    return $file_paths;
   }
 
 }
