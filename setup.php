@@ -48,6 +48,7 @@ if(defined("CONTENT_MODEL")){
         }
       }
     }
+
   });
 }
 

@@ -53,11 +53,15 @@ class StaticCache extends WaxModel{
   public static function write($url_model, $content, $format="html"){
     $file_paths = self::file_paths($url_model, $format);
     $save = $file_paths[0];
-    $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", substr($save, 0, $pos) );
-    //save the file path
+    $pos = strrpos($save, ".")+1;
+    $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", substr($save, 0, $pos));
     $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
-    if($format == "html") $content = str_ireplace("</body>", "<!-- SC: $url_model->static_cache_file --></body>", $content);
-    foreach($file_paths as $file_path) file_put_contents($file_path, $content);
+    foreach($file_paths as $file_path){
+      $pos = strrpos($file_path, ".");
+      $dir = substr($file_path, 0, $pos);
+      if(!is_dir($dir)) mkdir($dir, 0777, true);
+      file_put_contents($file_path.$format, $content);
+    }
   }
 
   public function remove($model, $format="html"){
@@ -79,11 +83,9 @@ class StaticCache extends WaxModel{
         $file_paths[] = rtrim($dir_path, "/") ."/.$format";
       }
     }else if($url_model->static_cache_file){
-      $file_paths[] = CACHE_DIR. "statics".$url_model->static_cache_file.".".$format;
+      $file_paths[] = CACHE_DIR. "statics".$url_model->static_cache_file;
     }else{
       $dir_path = CACHE_DIR ."statics".$url_model->origin_url;
-      //if the path doesnt exist, make the folder
-      if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
       $file_paths[] = rtrim($dir_path,"/") ."/.$format";
     }
     return $file_paths;
