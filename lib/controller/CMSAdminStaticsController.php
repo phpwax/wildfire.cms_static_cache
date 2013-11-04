@@ -92,7 +92,7 @@ class CMSAdminStaticsController extends AdminContentController {
     $class = $this->model_class;
     $url = new $class(Request::param("id"));
     if($url){
-      StaticCache::remove($url);
+      foreach(StaticCache::$formats as $format) StaticCache::remove($url, $format);
       $this->session->add_message("Cache for $url->origin_url has been removed.");
     }else $this->session->add_error("Cannot find entry for that page.");
     $this->redirect_to("/".trim($this->controller,"/")."/");
