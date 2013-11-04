@@ -56,11 +56,18 @@ class CMSAdminStaticsController extends AdminContentController {
     $posted = Request::param($this->model->table);
     $page_id = $posted[$this->model->parent_join_field];
     if($posted && $page_id && ($obj = new $class($page_id)) && StaticCache::cacheable($obj) ){
-      $source_url = "http://".$_SERVER['HTTP_HOST'].$obj->permalink."?readonly=1";
-      $content = file_get_contents($source_url);
+      $source_url = "http://".$_SERVER['HTTP_HOST'].$obj->permalink;
+      $flag = "?readonly=1";
+
       $map_class = URL_MAP_MODEL;
       $map_model = new $map_class;
-      foreach($map_model->filter("destination_id", $obj->primval)->filter("destination_model", $class)->all() as $url) StaticCache::write($url, $content);
+      foreach($map_model->filter("destination_id", $obj->primval)->filter("destination_model", $class)->all() as $url){
+        foreach(StaticCache::$formats as $format){
+          $page_url = $source_url . ".".$format.$flag;
+          $content = file_get_contents($page_url);
+          StaticCache::write($url, $content);
+        }
+      }
       $this->session->add_message("<a href='$obj->permalink' target='_blank'>Cache for $obj->title</a> has been created.");
     }elseif($posted && $page_id) $this->session->add_error("This page cannot be cached, probably due to rule restricting it.");
   }
@@ -69,9 +76,13 @@ class CMSAdminStaticsController extends AdminContentController {
     $class = $this->model_class;
     $url = new $class(Request::param("id"));
     if($url){
-      $source_url = "http://".$_SERVER['HTTP_HOST'].$url->origin_url."?readonly=1";
-      $content = file_get_contents($source_url);
-      StaticCache::write($url, $content);
+      $source_url = "http://".$_SERVER['HTTP_HOST'].$obj->permalink;
+      $flag = "?readonly=1";
+      foreach(StaticCache::$formats as $format){
+        $page_url = $source_url . ".".$format.$flag;
+        $content = file_get_contents($page_url);
+        StaticCache::write($url, $content);
+      }
       $this->session->add_message("<a href='$url->origin_url' target='_blank'>Cache for $url->origin_url</a> has been regenerated.");
     }else $this->session->add_error("Cannot find entry for that page.");
     $this->redirect_to("/".trim($this->controller,"/")."/");
