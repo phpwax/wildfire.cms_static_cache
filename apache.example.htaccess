@@ -7,9 +7,13 @@ RewriteEngine On
 RewriteBase /
 
 ####### NEW SEGMENT TO ADD IN #######
-RewriteCond statics/$1index.html -f
+RewriteCond statics/$1.html -f
 RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
 RewriteRule (.*) /statics/$1 [L,NC]
+#for html statics
+RewriteCond statics/$1.html -f
+RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
+RewriteRule (.*) /statics/$1.html [L,NC]
 #for multi domain version
 RewriteCond statics/%{SERVER_NAME}/$1 -f
 RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
