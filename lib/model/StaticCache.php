@@ -53,7 +53,6 @@ class StaticCache extends WaxModel{
   public static function write($url_model, $content, $format="html"){
     $file_paths = self::file_paths($url_model, $format);
     $save = $file_paths[0];
-    $pos = strrpos($save, ".");
     $url_model->static_cache_file = str_replace(CACHE_DIR."statics", "", substr($save, 0, $pos) );
     //save the file path
     $url_model->update_attributes(array('date_cached'=>date("Y-m-d H:i:s") ) );
@@ -77,7 +76,7 @@ class StaticCache extends WaxModel{
       foreach($top->domains as $row){
         $dir_path = CACHE_DIR ."statics/".ltrim($row->webaddress.$base, "/");
         if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
-        $file_paths[] = $dir_path ."index.$format";
+        $file_paths[] = rtrim($dir_path, "/") ."/.$format";
       }
     }else if($url_model->static_cache_file){
       $file_paths[] = CACHE_DIR. "statics".$url_model->static_cache_file.".".$format;
@@ -85,7 +84,7 @@ class StaticCache extends WaxModel{
       $dir_path = CACHE_DIR ."statics".$url_model->origin_url;
       //if the path doesnt exist, make the folder
       if(!is_dir($dir_path)) mkdir($dir_path, 0777, true);
-      $file_paths[] = $dir_path ."index.$format";
+      $file_paths[] = rtrim($dir_path,"/") ."/.$format";
     }
     return $file_paths;
   }
