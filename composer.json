@@ -1,5 +1,6 @@
 {
     "name": "phpwax/wildfire.cms_static_cache",
+    "description": "Static cache plugin for Wildfire",
     "authors": [
         {
             "name": "Charles Marshall",
