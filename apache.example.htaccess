@@ -10,20 +10,26 @@ RewriteBase /
 ####### NEW SEGMENT TO ADD IN #######
 #generic statics (json|xml etc)
 RewriteCond statics/$1 -f
-RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
+RewriteCond %{REQUEST_METHOD} ^(GET)
+RewriteCond %{QUERY_STRING} ^$
 RewriteRule (.*) /statics/$1 [L,NC]
+
 #html only (extra check as url wont have .html on the end)
 RewriteCond statics/$1.html -f
-RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
+RewriteCond %{REQUEST_METHOD} ^(GET)
+RewriteCond %{QUERY_STRING} ^$
 RewriteRule (.*) /statics/$1.html [L,NC]
 
 #for multi domain version
 RewriteCond statics/%{SERVER_NAME}/$1 -f
-RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
+RewriteCond %{REQUEST_METHOD} ^(GET)
+RewriteCond %{QUERY_STRING} ^$
 RewriteRule (.*) /statics/%{SERVER_NAME}/$1 [L,NC]
+
 #html check
 RewriteCond statics/%{SERVER_NAME}/$1.html -f
-RewriteCond %{REQUEST_METHOD} ^(POST|GET)$
+RewriteCond %{REQUEST_METHOD} ^(GET)
+RewriteCond %{QUERY_STRING} ^$
 RewriteRule (.*) /statics/%{SERVER_NAME}/$1.html [L,NC]
 ############## END #################
 
